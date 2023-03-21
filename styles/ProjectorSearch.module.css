@@ -41,7 +41,7 @@
 
 .card-body {
   text-align: left;
-  padding: 0.5em;
+  padding: 1em;
   font-size: 1em;
   color: #ccc;
   line-height: 1.2em;
@@ -50,13 +50,28 @@
 .card-body p {
   margin: 0;
 }
-
 .card-footer {
-  margin-top: 1em;
-  font-size: 0.9em;
-  color: #999999;
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 0.4em;
+  background-color: #333;
+  width: 100%;
+  justify-content: center;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
 }
 
+.topic {
+  margin-right: 10px;
+  margin-bottom: 10px;
+  padding: 5px 10px;
+  border-radius: 20px;
+  background: linear-gradient(to bottom right, #0077b6, #2e66af);
+  color: white;
+  font-weight: bold;
+  font-size: 12px;
+}
 .SearchingBar{
   display: flex;
   flex-direction: column;

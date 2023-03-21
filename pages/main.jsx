@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styles from '@/styles/ProjectorSearch.module.css';
+
 function Main() {
     const [listOfProjects, setListOfProjects] = useState([]);
     const [searchText, setSearchText] = useState('');
@@ -13,9 +14,21 @@ function Main() {
         const response = await axios.get(
             'https://api.github.com/users/Franmgg/repos'
         );
-        console.log(response)
         return response.data;
     }
+
+    async function fetchTopics(repo) {
+        const response = await axios.get(
+            `https://api.github.com/repos/Franmgg/${repo}/topics`,
+            {
+                headers: {
+                    Accept: "application/vnd.github.mercy-preview+json"
+                }
+            }
+        );
+        return response.data;
+    }
+
     function redirectToRepo(link) { // redirigir a la página del repositorio
         window.open(link, '_blank');
     }
@@ -23,22 +36,24 @@ function Main() {
     useEffect(() => {
         async function getRepos() {
             const repos = await fetchGithubRepos();
-            console.log(repos)
             const returnArray = repos
                 .filter(repo => repo.name !== 'Franmgg')
-                .map(repo => ({
-                    Name: repo.name,
-                    Description: repo.description || 'No hay descripción',
-                    RepoLink: repo.html_url // agregar el enlace al repositorio
-                }));
-            setListOfProjects(returnArray);
+                .filter(repo => repo.name !== 'Project-search')
+                .map(async repo => {
+                    const topics = await fetchTopics(repo.name);
+                    return {
+                        Name: repo.name,
+                        Description: repo.description || 'No hay descripción',
+                        RepoLink: repo.html_url, // agregar el enlace al repositorio
+                        Topics: topics.names // agregar los topics
+                    };
+                });
+            setListOfProjects(await Promise.all(returnArray));
         }
 
         getRepos();
-    }, [])
+    }, []);
 
-    useEffect(() => {
-    }, [listOfProjects])
     return (
         <div>
             <div className={styles['SearchingBar']}>
@@ -58,7 +73,11 @@ function Main() {
                         <div className={styles['card']} key={e.Name}>
                             <div className={styles['card-title']}>{e.Name}</div>
                             <div className={styles['card-body']}>{e.Description}</div>
-                            <div className={styles['card-footer']}>{e.topics}</div>
+                            <div className={styles['card-footer']}>
+                                {e.Topics.map((topic, i) => (
+                                    <span key={i} className={styles['topic']}>{topic}</span>
+                                ))}
+                            </div>
                         </div>
                     ))}
             </div>
