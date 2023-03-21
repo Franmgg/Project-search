@@ -9,49 +9,28 @@ function Main() {
         setSearchText(e.target.value);
     }
 
-    var ArrayText = {
-        "projecto": [
-            { Name: "Projecto1", Description: "Easy" },
-            { Name: "Projecto2", Description: "Medium" },
-            { Name: "Projecto3", Description: "Hard" }
-        ]
-    }
-
     async function fetchGithubRepos() {
         const response = await axios.get(
             'https://api.github.com/users/Franmgg/repos'
         );
+        console.log(response)
         return response.data;
     }
-
-    const filter = (e) => {
-        let returnArray = [];
-        const nameProjects = ArrayText['projecto'].map(x => x.Name.toLowerCase());
-
-        if (e) {
-            nameProjects.forEach((name, i) => {
-                if (name.includes(e.toLowerCase())) {
-                    returnArray.push(ArrayText['projecto'][i]);
-                }
-            });
-        } else {
-            returnArray = ArrayText['projecto'];
-        }
-
-        setListOfProjects(returnArray);
-    };
+    function redirectToRepo(link) { // redirigir a la página del repositorio
+        window.open(link, '_blank');
+    }
 
     useEffect(() => {
-        setListOfProjects(ArrayText['projecto']);
-
         async function getRepos() {
-            const repos = await fetchGithubRepos();            
+            const repos = await fetchGithubRepos();
+            console.log(repos)
             const returnArray = repos
-            .filter(repo => repo.name !== 'Franmgg')
-            .map(repo => ({
-                Name: repo.name,
-                Description: repo.description || 'No hay descripción'
-            }));
+                .filter(repo => repo.name !== 'Franmgg')
+                .map(repo => ({
+                    Name: repo.name,
+                    Description: repo.description || 'No hay descripción',
+                    RepoLink: repo.html_url // agregar el enlace al repositorio
+                }));
             setListOfProjects(returnArray);
         }
 
@@ -63,24 +42,33 @@ function Main() {
     return (
         <div>
             <div className={styles['SearchingBar']}>
-                <h1 className={styles['title']}>Bienvenidos a mis proyectos</h1>
+                <h1 className={styles['title']}>Welcome to my projects</h1>
                 <input
                     type='text'
                     className='text'
-                    placeholder='Escribe el proyecto a buscar'
+                    placeholder='Search for project'
                     value={searchText}
                     onChange={handleSearch}
                 />
             </div>
-            <div className={styles['ContainerProject']}>
+            <div className={styles['ContainerProject']} onClick={() => redirectToRepo(listOfProjects[0].RepoLink)}>
                 {listOfProjects
                     .filter(e => e.Name.toLowerCase().includes(searchText.toLowerCase()))
                     .map(e => (
                         <div className={styles['card']} key={e.Name}>
                             <div className={styles['card-title']}>{e.Name}</div>
                             <div className={styles['card-body']}>{e.Description}</div>
+                            <div className={styles['card-footer']}>{e.topics}</div>
                         </div>
                     ))}
+            </div>
+            <div className={styles['infoUser']}>
+                <div className={styles['user-info']}>
+                    <a href="https://github.com/tu-usuario" target="_blank">
+                        <img className={styles['avatar']} src="https://avatars.githubusercontent.com/u/95165729?v=4" alt="Avatar de tu usuario en Github" />
+                    </a>
+                    <a className={styles['username']} href="https://github.com/Franmgg" target="_blank">Franmgg</a>
+                </div>
             </div>
         </div>
 

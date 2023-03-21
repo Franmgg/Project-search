@@ -1,31 +1,62 @@
 .ContainerProject {
   display: flex;
   justify-content: space-evenly;
+  /* background-color: #222; */
+  color: #fff;
 }
+
 .title{
   font-family: monospace;
   font-size: xx-large;
+  text-shadow: 2px 2px #444;
 }
+
 .card {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 10em;
-  background-color: gray;
+  width: 16em;
+  background-color: #444;
   margin: 1em;
   border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease-in-out;
 }
-.card-title{
-  border-bottom: 2px solid black;
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+.card-title {
+  border-bottom: 2px solid #c9dd58;
   width: 100%;
   text-align: center;
-  padding: 0.2em;
-  color: whitesmoke;
+  padding: 0.5em 0;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 1px 1px #222;
 }
-.card-body{
+
+.card-body {
   text-align: left;
-  padding: 0.4em;
+  padding: 0.5em;
+  font-size: 1em;
+  color: #ccc;
+  line-height: 1.2em;
 }
+
+.card-body p {
+  margin: 0;
+}
+
+.card-footer {
+  margin-top: 1em;
+  font-size: 0.9em;
+  color: #999999;
+}
+
 .SearchingBar{
   display: flex;
   flex-direction: column;
@@ -34,11 +65,61 @@
   margin-bottom: 2em;
   
 }
+
 .SearchingBar input{
-  background-color: whitesmoke;
+  background-color: #333;
   border-radius: 16px;
   padding: 1em;
   margin-top: 2em;
-  color:black;
+  color:#fff;
   font-weight: 700;
+  border: none;
+  width: 50%;
+}
+
+.SearchingBar input::placeholder {
+  color: #ccc;
+}
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  background-color: #333;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.username {
+  font-size: 20px;
+  color: #e5e5e5;
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+}
+
+.username:hover {
+  color: #fff;
+}
+
+
+.infoUser {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 200px;
+  height: 77px;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  background-color: #555;
+  color: #fff;
+  transition: transform 0.2s ease-in-out;
+}
+
+.infoUser:hover {
+  transform: scale(1.05);
 }
