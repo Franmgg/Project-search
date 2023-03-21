@@ -1,0 +1,44 @@
+.ContainerProject {
+  display: flex;
+  justify-content: space-evenly;
+}
+.title{
+  font-family: monospace;
+  font-size: xx-large;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 10em;
+  background-color: gray;
+  margin: 1em;
+  border-radius: 8px;
+}
+.card-title{
+  border-bottom: 2px solid black;
+  width: 100%;
+  text-align: center;
+  padding: 0.2em;
+  color: whitesmoke;
+}
+.card-body{
+  text-align: left;
+  padding: 0.4em;
+}
+.SearchingBar{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top:4em ;
+  margin-bottom: 2em;
+  
+}
+.SearchingBar input{
+  background-color: whitesmoke;
+  border-radius: 16px;
+  padding: 1em;
+  margin-top: 2em;
+  color:black;
+  font-weight: 700;
+}
